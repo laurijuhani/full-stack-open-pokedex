@@ -4,13 +4,13 @@ on:
   push:
     branches:
       - main
-    pull_request:
-      branches:
-        - main
-      types:
-        - opened
-        - synchronize
-        - reopened
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
 
 jobs:
   simple_deployment_pipeline:
