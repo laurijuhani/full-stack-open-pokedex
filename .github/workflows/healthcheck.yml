@@ -21,9 +21,9 @@ jobs:
           retry-delay: 10s
 
       - name: Log success message
+        run: echo '✅ Healthcheck succeeded for URL ${{ secrets.HEALTHCHECK_URL }}'
         if: ${{ steps.healthcheck.outcome == 'success' }}
-        run: echo "✅ Healthcheck succeeded for URL: ${{ secrets.HEALTHCHECK_URL }}"
 
       - name: Log failure message
+        run: echo "❌ Healthcheck failed for URL ${{ secrets.HEALTHCHECK_URL }}"
         if: ${{ steps.healthcheck.outcome == 'failure' }}
-        run: echo "❌ Healthcheck failed for URL: ${{ secrets.HEALTHCHECK_URL }}"
