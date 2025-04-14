@@ -38,20 +38,20 @@ jobs:
         if: ${{ github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
       
       - name: Success
-        uses: rjstone/discord-webhook-notify@v1
+        uses: tsickert/discord-webhook@v7.0.0
         with:
-          severity: info
-          details: The app has been deployed
-          description: Build succeeded
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          embed-color: 65280
+          embed-description: The app has been deployed
+          embed-title: Build succeeded
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         if: ${{ success() && github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
       - name: Failure
-        uses: rjstone/discord-webhook-notify@v1
+        uses: tsickert/discord-webhook@v7.0.0
         with:
-          severity: error
-          description: Build failed
-          details: commit ${{ github.event.head_commit.url }} broke the build
-          webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+          embed-color: 16711680
+          embed-title: Build failed
+          embed-description: commit ${{ github.event.head_commit.url }} broke the build
+          webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
         if: ${{ failure() && github.event_name == 'push' && !contains(github.event.head_commit.message, '#skip') }}
 
   tag_release:
