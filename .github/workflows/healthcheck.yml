@@ -1,0 +1,30 @@
+name: Periodic Healthcheck
+
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  healthcheck:
+    runs-on: ubuntu-20.04
+    steps:
+     - uses: actions/checkout@v4
+     - name: Check deployed service URL
+        id: healthcheck
+        uses: jtalk/url-health-check-action@v4
+        with:
+          url: ${{ secrets.HEALTHCHECK_URL }}
+          max-attempts: 3
+          retry-delay: 10s
+
+     - name: Log success message
+        if: ${{ steps.healthcheck.outcome == 'success' }}
+        run: echo "✅ Healthcheck succeeded for URL: ${{ secrets.HEALTHCHECK_URL }}"
+
+     - name: Log failure message
+        if: ${{ steps.healthcheck.outcome == 'failure' }}
+        run: echo "❌ Healthcheck failed for URL: ${{ secrets.HEALTHCHECK_URL }}"
