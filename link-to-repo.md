@@ -1,0 +1,1 @@
+https://github.com/laurijuhani/fsd-ci-cd
